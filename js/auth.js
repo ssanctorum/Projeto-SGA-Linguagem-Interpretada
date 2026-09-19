@@ -29,5 +29,6 @@ if (formCadastro) {
         console.log("CADASTRO - O sobrenome digitado:", sobrenomeUsuario);
         console.log("CADASTRO - O email digitado:", usuarioEmail);
         console.log("CADASTRO - A senha digitada foi:", senhaDigitada);
+        console.log("CADASTRO - A senha de confirmação digitada foi:", document.getElementById('confirm-password').value);
     });
 }
