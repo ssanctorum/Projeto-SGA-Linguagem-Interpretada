@@ -1,0 +1,82 @@
+/* O cartão branco */
+.card {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 10px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* O título do cartão */
+.card > p:first-child {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #004080;
+    margin-bottom: 1.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+label {
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none; 
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus {
+    border-color: #1C5D8E;
+}
+
+input[type="submit"] {
+    background-color: #1C5D8E;
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+
+input[type="submit"]:hover {
+    background-color: #2673AD;
+}
+
+.card a {
+    color: #1C5D8E;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+form + p {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
