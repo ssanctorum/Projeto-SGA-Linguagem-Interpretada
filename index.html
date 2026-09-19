@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <title>Login - Universidade de To-Oh</title>
+</head> 
 <body>
-    
+    <header>
+        <hero>
+            <h2>Bem-vindo à Universidade de To-Oh</h2>
+            <p>Explore nossos cursos e oportunidades de aprendizado.</p>    
+        </hero>
+    </header>
+    <main>
+        <div class="card">
+            <p>Login</p>
+            <form id="form-login">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <br>
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <input type="submit" value="Entrar">
+            </form>
+            <p>Não tem uma conta? <a href="cadastro.html">Registre-se aqui</a></p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Universidade de To-Oh. Todos os direitos reservados.</p>
+    </footer>
+    <script src="js/auth.js"></script>
 </body>
 </html>
