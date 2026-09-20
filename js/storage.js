@@ -5,7 +5,6 @@ const SGAStorage = (() => {
     const CHAVE_NOTAS = "sga_notas";
     const PREFIXO_FOTO = "sga_foto_";
 
-
     function ler(chave, valorPadrao) {
         const texto = localStorage.getItem(chave);
         if (texto === null) {
@@ -87,5 +86,22 @@ const SGAStorage = (() => {
         localStorage.removeItem(chaveFoto(email));
     }
 
-    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail, atualizarProfessor, definirLogado, obterLogado, logout, chaveFoto, salvarFoto, obterFoto, removerFoto };
+        function salvarNotasAluno(turmaId, matricula, notas) {
+        const todas = ler(CHAVE_NOTAS, {});
+
+        if (!todas[turmaId]) {
+            todas[turmaId] = {};
+        }
+
+        todas[turmaId][matricula] = { ...todas[turmaId][matricula], ...notas };
+        return gravar(CHAVE_NOTAS, todas);
+    }
+
+    function obterAlunosDaTurma(turma) {
+        const todas = ler(CHAVE_NOTAS, {});
+        const editadas = todas[turma.id] || {};
+
+        return turma.alunos.map(aluno => ({ ...aluno, ...editadas[aluno.matricula] }));
+    }
+    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail, atualizarProfessor, definirLogado, obterLogado, logout, chaveFoto, salvarFoto, obterFoto, removerFoto, salvarNotasAluno, obterAlunosDaTurma };
 })()
