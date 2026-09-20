@@ -55,5 +55,21 @@ const SGAStorage = (() => {
         return salvarProfessores(lista);
     }
 
-    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail, atualizarProfessor };
+        function definirLogado(email) {
+        return gravar(CHAVE_LOGADO, email);
+    }
+
+    function obterLogado() {
+        const email = ler(CHAVE_LOGADO, null);
+        if (email === null) {
+            return null;
+        }
+        return buscarProfessorPorEmail(email) || null;
+    }
+
+    function logout() {
+        localStorage.removeItem(CHAVE_LOGADO);
+    }
+
+    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail, atualizarProfessor, definirLogado, obterLogado, logout };
 })()
