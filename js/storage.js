@@ -43,5 +43,17 @@ const SGAStorage = (() => {
         return lista.find(p => p.email.toLowerCase() === email.toLowerCase());
     }
 
-    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail };
+    function atualizarProfessor(emailAtual, dados) {
+        const lista = listarProfessores();
+        const posicao = lista.findIndex(p => p.email.toLowerCase() === emailAtual.toLowerCase());
+
+        if (posicao === -1) {
+            return false;
+        }
+
+        lista[posicao] = { ...lista[posicao], ...dados };
+        return salvarProfessores(lista);
+    }
+
+    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail, atualizarProfessor };
 })()
