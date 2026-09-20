@@ -71,5 +71,21 @@ const SGAStorage = (() => {
         localStorage.removeItem(CHAVE_LOGADO);
     }
 
-    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail, atualizarProfessor, definirLogado, obterLogado, logout };
+    function chaveFoto(email) {
+        return PREFIXO_FOTO + email.toLowerCase();
+    }
+
+    function salvarFoto(email, base64) {
+        return gravar(chaveFoto(email), base64);
+    }
+
+    function obterFoto(email) {
+        return ler(chaveFoto(email), null);
+    }
+
+    function removerFoto(email) {
+        localStorage.removeItem(chaveFoto(email));
+    }
+
+    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail, atualizarProfessor, definirLogado, obterLogado, logout, chaveFoto, salvarFoto, obterFoto, removerFoto };
 })()
