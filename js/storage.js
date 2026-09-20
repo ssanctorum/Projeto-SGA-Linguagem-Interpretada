@@ -29,6 +29,19 @@ const SGAStorage = (() => {
             return false;
         }
     }
+    
+    function listarProfessores() {
+        return ler(CHAVE_PROFESSORES, []);
+    }
 
-    return { ler, gravar }
+    function salvarProfessores(lista) {
+        return gravar(CHAVE_PROFESSORES, lista);
+    }
+
+    function buscarProfessorPorEmail(email) {
+        const lista = listarProfessores();
+        return lista.find(p => p.email.toLowerCase() === email.toLowerCase());
+    }
+
+    return { ler, gravar, listarProfessores, salvarProfessores, buscarProfessorPorEmail };
 })()
