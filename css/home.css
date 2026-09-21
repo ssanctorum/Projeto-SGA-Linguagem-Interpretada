@@ -1,0 +1,426 @@
+/* ========================================
+   CORES OFICIAIS DO PROJETO
+======================================== */
+
+:root {
+    --azul-marinho: #112D60;
+    --azul-principal: #186FD9;
+    --azul-claro: #DFECFA;
+    --verde: #279E5B;
+    --vermelho: #E63946;
+    --ambar: #F0A019;
+    --cinza-escuro: #212529;
+    --cinza-medio: #6C757D;
+    --cinza-claro: #F4F6F8;
+    --branco: #FFFFFF;
+}
+
+
+/* ========================================
+   CONFIGURAÇÕES GERAIS
+======================================== */
+
+body.pagina-home {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--cinza-claro);
+    color: var(--cinza-escuro);
+}
+
+
+/* ========================================
+   CABEÇALHO SUPERIOR
+======================================== */
+
+.cabecalho-home {
+    background-color: var(--azul-marinho);
+    color: var(--branco);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem 2rem;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+    text-align: left;
+}
+
+.identidade-instituicao h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
+}
+
+.identidade-instituicao p {
+    font-size: 0.9rem;
+    color: var(--azul-claro);
+}
+
+
+/* ========================================
+   PROFESSOR LOGADO
+======================================== */
+
+.usuario-logado {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.avatar-usuario {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--azul-principal);
+    color: var(--branco);
+
+    border: 2px solid var(--branco);
+    border-radius: 50%;
+
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.informacoes-usuario {
+    display: flex;
+    flex-direction: column;
+}
+
+.informacoes-usuario span {
+    font-size: 0.75rem;
+    color: var(--azul-claro);
+}
+
+.informacoes-usuario strong {
+    font-size: 0.95rem;
+    color: var(--branco);
+}
+
+
+/* ========================================
+   BOTÃO SAIR
+======================================== */
+
+.botao-sair {
+    background-color: transparent;
+    color: var(--branco);
+
+    border: 1px solid var(--branco);
+    border-radius: 5px;
+
+    padding: 0.55rem 1rem;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s,
+        color 0.3s;
+}
+
+.botao-sair:hover {
+    background-color: var(--branco);
+    color: var(--azul-marinho);
+}
+
+
+/* ========================================
+   DEPOIS DO CABEÇALHO
+======================================== */
+
+.estrutura-home {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+
+/* ========================================
+   MENU LATERAL
+======================================== */
+
+.menu-lateral {
+    width: 230px;
+    flex-shrink: 0;
+
+    background-color: var(--azul-marinho);
+
+    padding: 1.5rem 1rem;
+}
+
+.menu-lateral nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.item-menu {
+    width: 100%;
+
+    background-color: transparent;
+    color: var(--branco);
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 0.9rem 1rem;
+
+    text-align: left;
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s,
+        transform 0.2s;
+}
+
+.item-menu:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateX(3px);
+}
+
+.item-menu.ativo {
+    background-color: var(--azul-principal);
+    font-weight: bold;
+}
+
+
+/* ========================================
+   CONTEÚDO PRINCIPAL
+======================================== */
+
+.conteudo-principal {
+    flex: 1;
+
+    display: block;
+    padding: 2rem;
+
+    background-color: var(--cinza-claro);
+
+    overflow-y: auto;
+}
+
+.cabecalho-conteudo {
+    margin-bottom: 2rem;
+}
+
+.texto-boas-vindas {
+    color: var(--azul-principal);
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    margin-bottom: 0.4rem;
+}
+
+.cabecalho-conteudo h2 {
+    color: var(--azul-marinho);
+    font-size: 1.8rem;
+
+    margin-bottom: 0.4rem;
+}
+
+.cabecalho-conteudo > p:last-child {
+    color: var(--cinza-medio);
+}
+
+
+/* ========================================
+   LISTA DE TURMAS
+======================================== */
+
+.lista-turmas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+
+    gap: 1.5rem;
+}
+
+
+/* ========================================
+   CARTÃO DE TURMA
+======================================== */
+
+.cartao-turma {
+    background-color: var(--branco);
+
+    border: 1px solid var(--azul-claro);
+    border-left: 5px solid var(--azul-principal);
+    border-radius: 10px;
+
+    padding: 1.5rem;
+
+    box-shadow: 0 4px 12px rgba(17, 45, 96, 0.08);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.cartao-turma:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 20px rgba(17, 45, 96, 0.16);
+}
+
+.cartao-turma h3 {
+    color: var(--azul-marinho);
+    font-size: 1.2rem;
+
+    margin-bottom: 1rem;
+}
+
+.informacao-turma {
+    color: var(--cinza-medio);
+    font-size: 0.9rem;
+
+    margin-bottom: 0.6rem;
+}
+
+.informacao-turma strong {
+    color: var(--cinza-escuro);
+}
+
+
+/* ========================================
+   BOTÃO ACESSAR TURMA
+======================================== */
+
+.botao-acessar-turma {
+    width: 100%;
+
+    background-color: var(--azul-principal);
+    color: var(--branco);
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 0.8rem;
+
+    margin-top: 1rem;
+
+    font-size: 0.95rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: background-color 0.3s;
+}
+
+.botao-acessar-turma:hover {
+    background-color: var(--azul-marinho);
+}
+
+
+/* ========================================
+   MENSAGENS DA PÁGINA
+======================================== */
+
+.mensagem-carregamento,
+.mensagem-sem-turmas {
+    grid-column: 1 / -1;
+
+    background-color: var(--azul-claro);
+    color: var(--azul-marinho);
+
+    border-radius: 8px;
+
+    padding: 1.5rem;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .cabecalho-home {
+        align-items: flex-start;
+        gap: 1rem;
+
+        padding: 1rem;
+    }
+
+    .identidade-instituicao h1 {
+        font-size: 1.1rem;
+    }
+
+    .identidade-instituicao p {
+        display: none;
+    }
+
+    .informacoes-usuario {
+        display: none;
+    }
+
+    .estrutura-home {
+        flex-direction: column;
+    }
+
+    .menu-lateral {
+        width: 100%;
+        padding: 0.7rem;
+    }
+
+    .menu-lateral nav {
+        flex-direction: row;
+    }
+
+    .item-menu {
+        text-align: center;
+        padding: 0.7rem 0.4rem;
+        font-size: 0.85rem;
+    }
+
+    .item-menu:hover {
+        transform: none;
+    }
+
+    .conteudo-principal {
+        padding: 1.2rem;
+    }
+
+    .lista-turmas {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .avatar-usuario {
+        display: none;
+    }
+
+    .botao-sair {
+        padding: 0.5rem 0.7rem;
+    }
+
+    .cabecalho-conteudo h2 {
+        font-size: 1.5rem;
+    }
+
+    .menu-lateral {
+        overflow-x: auto;
+    }
+
+    .item-menu {
+        min-width: 100px;
+    }
+}
