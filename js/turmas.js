@@ -11,30 +11,6 @@
     oficiais definidos pelo grupo.
 */
 
-const turmasTemporarias = [
-    {
-        id: 1,
-        disciplina: "Linguagem de Programação",
-        periodo: "2026.2",
-        codigo: "LP001",
-        quantidadeAlunos: 30
-    },
-    {
-        id: 2,
-        disciplina: "Banco de Dados",
-        periodo: "2026.2",
-        codigo: "BD001",
-        quantidadeAlunos: 25
-    },
-    {
-        id: 3,
-        disciplina: "Engenharia de Software",
-        periodo: "2026.2",
-        codigo: "ES001",
-        quantidadeAlunos: 28
-    }
-];
-
 
 // ========================================
 // ELEMENTOS DA PÁGINA
@@ -48,9 +24,6 @@ const nomeProfessor =
 
 const avatarUsuario =
     document.getElementById("avatar-usuario");
-
-const menuInicio =
-    document.getElementById("menu-inicio");
 
 const menuTurmas =
     document.getElementById("menu-turmas");
@@ -128,17 +101,6 @@ function criarIniciais(nome, sobrenome) {
 // ========================================
 
 function adicionarEventosDoMenu() {
-
-    menuInicio.addEventListener(
-        "click",
-        function () {
-
-            marcarMenuAtivo(menuInicio);
-
-            renderizarTurmas();
-        }
-    );
-
 
     menuTurmas.addEventListener(
         "click",
@@ -256,7 +218,7 @@ function renderizarTurmas() {
     );
 
 
-    if (turmasTemporarias.length === 0) {
+    if (turmas.length === 0) {
 
         exibirMensagemSemTurmas(listaTurmas);
 
@@ -264,7 +226,7 @@ function renderizarTurmas() {
     }
 
 
-    turmasTemporarias.forEach(
+    turmas.forEach(
         function (turma) {
 
             const cartao =
@@ -305,17 +267,6 @@ function criarCartaoTurma(turma) {
         "Período: " + turma.periodo;
 
 
-    const codigo =
-        document.createElement("p");
-
-    codigo.classList.add(
-        "informacao-turma"
-    );
-
-    codigo.textContent =
-        "Código: " + turma.codigo;
-
-
     const quantidadeAlunos =
         document.createElement("p");
 
@@ -325,7 +276,7 @@ function criarCartaoTurma(turma) {
 
     quantidadeAlunos.textContent =
         "Alunos matriculados: " +
-        turma.quantidadeAlunos;
+        turma.alunos.length;
 
 
     const botaoAcessar =
@@ -354,8 +305,6 @@ function criarCartaoTurma(turma) {
 
     cartao.appendChild(periodo);
 
-    cartao.appendChild(codigo);
-
     cartao.appendChild(quantidadeAlunos);
 
     cartao.appendChild(botaoAcessar);
@@ -370,132 +319,12 @@ function criarCartaoTurma(turma) {
 // ========================================
 
 function abrirTurma(turmaId) {
-
-    const turmaSelecionada =
-        turmasTemporarias.find(
-            function (turma) {
-
-                return turma.id === turmaId;
-            }
-        );
-
-
-    if (!turmaSelecionada) {
-
-        alert("Turma não encontrada.");
-
-        return;
-    }
-
-
-    /*
-        Guarda temporariamente qual turma
-        foi escolhida.
-
-        A Pessoa 3 poderá usar essa informação
-        para carregar a tabela de notas.
-    */
-
     localStorage.setItem(
         "turmaSelecionadaId",
-        turmaSelecionada.id
+        turmaId
     );
 
-
-    conteudoPrincipal.innerHTML = "";
-
-
-    const secaoTurma =
-        document.createElement("section");
-
-    secaoTurma.classList.add(
-        "cabecalho-conteudo"
-    );
-
-
-    const textoTurma =
-        document.createElement("p");
-
-    textoTurma.classList.add(
-        "texto-boas-vindas"
-    );
-
-    textoTurma.textContent =
-        "Turma selecionada";
-
-
-    const tituloTurma =
-        document.createElement("h2");
-
-    tituloTurma.textContent =
-        turmaSelecionada.disciplina;
-
-
-    const informacoesTurma =
-        document.createElement("p");
-
-    informacoesTurma.textContent =
-        "Período: " +
-        turmaSelecionada.periodo +
-        " | Código: " +
-        turmaSelecionada.codigo;
-
-
-    const mensagemIntegracao =
-        document.createElement("p");
-
-    mensagemIntegracao.classList.add(
-        "mensagem-carregamento"
-    );
-
-    mensagemIntegracao.textContent =
-        "A tabela de notas será exibida nesta área após a integração com notas.js.";
-
-
-    const botaoVoltar =
-        document.createElement("button");
-
-    botaoVoltar.type = "button";
-
-    botaoVoltar.classList.add(
-        "botao-acessar-turma"
-    );
-
-    botaoVoltar.textContent =
-        "Voltar para minhas turmas";
-
-
-    botaoVoltar.addEventListener(
-        "click",
-        function () {
-
-            marcarMenuAtivo(menuTurmas);
-
-            renderizarTurmas();
-        }
-    );
-
-
-    secaoTurma.appendChild(textoTurma);
-
-    secaoTurma.appendChild(tituloTurma);
-
-    secaoTurma.appendChild(
-        informacoesTurma
-    );
-
-
-    conteudoPrincipal.appendChild(
-        secaoTurma
-    );
-
-    conteudoPrincipal.appendChild(
-        mensagemIntegracao
-    );
-
-    conteudoPrincipal.appendChild(
-        botaoVoltar
-    );
+    renderizarTabelaNotas(turmaId);
 }
 
 
