@@ -119,4 +119,3 @@ function renderizarPerfil() {
 }
 
 atualizarCabecalho();
-renderizarPerfil();
