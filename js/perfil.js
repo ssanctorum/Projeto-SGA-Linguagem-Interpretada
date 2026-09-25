@@ -42,14 +42,19 @@ function renderizarPerfil() {
             <button type="submit">Salvar</button>
         </form>
     `;
-    
 
-        document.getElementById("form-perfil").addEventListener("submit", function (evento) {
+
+           document.getElementById("form-perfil").addEventListener("submit", function (evento) {
         evento.preventDefault();
 
         const novoNome = document.getElementById("perfil-nome").value;
         const novoEmail = document.getElementById("perfil-email").value;
         const novaDisciplina = document.getElementById("perfil-disciplina").value;
+
+        if (novoNome.trim() === "" || novaDisciplina.trim() === "") {
+            alert("Preencha nome e disciplina.");
+            return;
+        }
 
         SGAStorage.atualizarProfessor(professor.email, {
             nome: novoNome,
