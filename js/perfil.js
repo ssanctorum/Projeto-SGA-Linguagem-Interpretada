@@ -43,8 +43,7 @@ function renderizarPerfil() {
         </form>
     `;
 
-
-           document.getElementById("form-perfil").addEventListener("submit", function (evento) {
+    document.getElementById("form-perfil").addEventListener("submit", function (evento) {
         evento.preventDefault();
 
         const novoNome = document.getElementById("perfil-nome").value;
@@ -61,6 +60,10 @@ function renderizarPerfil() {
             email: novoEmail,
             disciplinaPrincipal: novaDisciplina
         });
+
+        if (novoEmail.toLowerCase() !== professor.email.toLowerCase()) {
+            SGAStorage.definirLogado(novoEmail);
+        }
 
         atualizarCabecalho();
     });
