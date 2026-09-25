@@ -71,7 +71,7 @@ function renderizarPerfil() {
         atualizarCabecalho();
     });
 
-    document.getElementById("perfil-foto").addEventListener("change", function (evento) {
+           document.getElementById("perfil-foto").addEventListener("change", function (evento) {
         const arquivo = evento.target.files[0];
 
         if (!arquivo) {
@@ -93,7 +93,14 @@ function renderizarPerfil() {
         const leitor = new FileReader();
 
         leitor.onload = function () {
-            console.log(leitor.result);
+            const sucesso = SGAStorage.salvarFoto(professor.email, leitor.result);
+
+            if (!sucesso) {
+                alert("Não foi possível salvar a foto. Tente uma imagem menor.");
+                return;
+            }
+
+            atualizarCabecalho();
         };
 
         leitor.readAsDataURL(arquivo);
