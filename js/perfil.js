@@ -39,6 +39,9 @@ function renderizarPerfil() {
             <label for="perfil-disciplina">Disciplina principal</label>
             <input type="text" id="perfil-disciplina" value="${professor.disciplinaPrincipal}">
 
+            <label for="perfil-foto">Foto do perfil (PNG ou JPG)</label>
+            <input type="file" id="perfil-foto" accept="image/png, image/jpeg">
+
             <button type="submit">Salvar</button>
         </form>
     `;
@@ -66,6 +69,34 @@ function renderizarPerfil() {
         }
 
         atualizarCabecalho();
+    });
+
+    document.getElementById("perfil-foto").addEventListener("change", function (evento) {
+        const arquivo = evento.target.files[0];
+
+        if (!arquivo) {
+            return;
+        }
+
+        const tiposPermitidos = ["image/png", "image/jpeg"];
+        if (!tiposPermitidos.includes(arquivo.type)) {
+            alert("Envie apenas imagens PNG ou JPG.");
+            return;
+        }
+
+        const tamanhoMaximo = 2 * 1024 * 1024;
+        if (arquivo.size > tamanhoMaximo) {
+            alert("A imagem deve ter no máximo 2 MB.");
+            return;
+        }
+
+        const leitor = new FileReader();
+
+        leitor.onload = function () {
+            console.log(leitor.result);
+        };
+
+        leitor.readAsDataURL(arquivo);
     });
 }
 
