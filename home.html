@@ -1,139 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <link
-        rel="icon"
-        type="image/png"
-        href="assets/icons/favicon.png"
-    >
-
-    <title>
-        Área do Professor - Universidade de Viktor Chondria
-    </title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png">
+    <title>Área do Professor - Universidade de Viktor Chondria</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/notas.css">
 </head>
-
 <body class="pagina-home">
-
-    <!-- Cabeçalho -->
     <header class="cabecalho-home">
-
         <div class="identidade-instituicao">
             <h1>Universidade de Viktor Chondria</h1>
             <p>Sistema de Gestão Acadêmica</p>
         </div>
 
         <div class="usuario-logado">
-            <div
-                class="avatar-usuario"
-                id="avatar-usuario"
-            >
-                PR
-            </div>
+            <div class="avatar-usuario" id="avatar-usuario">PR</div>
 
             <div class="informacoes-usuario">
                 <span>Professor</span>
-
-                <strong id="nome-professor">
-                    Nome do professor
-                </strong>
+                <strong id="nome-professor">Nome do professor</strong>
             </div>
 
-            <button
-                type="button"
-                class="botao-sair"
-                id="botao-sair"
-            >
-                Sair
-            </button>
+            <button type="button" class="botao-sair" id="botao-sair">Sair</button>
         </div>
-
     </header>
 
-    <!-- Depois do cabeçalho -->
     <div class="estrutura-home">
-
-        <!-- Menu -->
         <aside class="menu-lateral">
-
             <nav>
-                <button
-                    type="button"
-                    class="item-menu ativo"
-                    id="menu-inicio"
-                >
-                    Início
-                </button>
-
-                <button
-                    type="button"
-                    class="item-menu"
-                    id="menu-turmas"
-                >
+                <button type="button" class="item-menu ativo" id="menu-turmas">
                     Minhas turmas
                 </button>
 
-                <button
-                    type="button"
-                    class="item-menu"
-                    id="menu-perfil"
-                >
+                <button type="button" class="item-menu" id="menu-perfil">
                     Meu perfil
                 </button>
             </nav>
-
         </aside>
 
-        <!-- Conteúdo parar o JavaScript -->
-        <main
-            class="conteudo-principal"
-            id="conteudo-principal"
-        >
-
-            <section class="cabecalho-conteudo">
-                <p class="texto-boas-vindas">
-                    Bem-vindo ao Sistema de Gestão Acadêmica
-                </p>
-
-                <h2>Minhas turmas</h2>
-
-                <p>
-                    Selecione uma turma para visualizar os alunos
-                    e gerenciar as notas.
-                </p>
-            </section>
-
-            <!-- cartões do turmas.js -->
-            <section
-                class="lista-turmas"
-                id="lista-turmas"
-            >
-                <p class="mensagem-carregamento">
-                    Carregando turmas...
-                </p>
-            </section>
-
+        <main class="conteudo-principal" id="conteudo-principal">
+            <p class="mensagem-carregamento">Carregando turmas...</p>
         </main>
-
     </div>
 
-    <!-- arquivos a ser carregados -->
     <script src="js/dados.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/notas.js"></script>
     <script src="js/perfil.js"></script>
     <script src="js/turmas.js"></script>
-
 </body>
-
 </html>
