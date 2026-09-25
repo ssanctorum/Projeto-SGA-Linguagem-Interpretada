@@ -12,7 +12,18 @@ function atualizarCabecalho() {
     }
 
     document.getElementById("nome-professor").textContent = professor.nome;
-    document.getElementById("avatar-usuario").textContent = iniciaisDoNome(professor.nome);
+
+    const avatar = document.getElementById("avatar-usuario");
+    const foto = SGAStorage.obterFoto(professor.email);
+
+    if (foto) {
+        avatar.style.backgroundImage = "url(" + foto + ")";
+        avatar.style.backgroundSize = "cover";
+        avatar.textContent = "";
+    } else {
+        avatar.style.backgroundImage = "";
+        avatar.textContent = iniciaisDoNome(professor.nome);
+    }
 }
 
 function renderizarPerfil() {
