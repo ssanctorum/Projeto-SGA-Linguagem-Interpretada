@@ -1,147 +1,37 @@
-// ========================================
-// DADOS TEMPORÁRIOS PARA TESTE
-// ========================================
-
-/*
-    Estes dados estão temporariamente neste arquivo
-    para que a Home possa ser testada enquanto o
-    dados.js ainda está vazio.
-
-    Depois, substituiremos esta lista pelos dados
-    oficiais definidos pelo grupo.
-*/
-
-
-// ========================================
-// ELEMENTOS DA PÁGINA
-// ========================================
-
-const conteudoPrincipal =
-    document.getElementById("conteudo-principal");
-
-const nomeProfessor =
-    document.getElementById("nome-professor");
-
-const avatarUsuario =
-    document.getElementById("avatar-usuario");
-
-const menuTurmas =
-    document.getElementById("menu-turmas");
-
-const menuPerfil =
-    document.getElementById("menu-perfil");
-
-const botaoSair =
-    document.getElementById("botao-sair");
-
-
-// ========================================
-// INICIALIZAÇÃO DA HOME
-// ========================================
+const conteudoPrincipal = document.getElementById("conteudo-principal");
+const menuTurmas = document.getElementById("menu-turmas");
+const menuPerfil = document.getElementById("menu-perfil");
+const botaoSair = document.getElementById("botao-sair");
 
 document.addEventListener("DOMContentLoaded", function () {
+    const professor = SGAStorage.obterLogado();
 
-    exibirProfessorTemporario();
+    if (!professor) {
+        window.location.href = "index.html";
+        return;
+    }
 
+    atualizarCabecalho();
     adicionarEventosDoMenu();
-
     renderizarTurmas();
 });
 
-
-// ========================================
-// PROFESSOR TEMPORÁRIO
-// ========================================
-
-function exibirProfessorTemporario() {
-
-    /*
-        Este nome será substituído posteriormente
-        pelo professor salvo durante o login.
-    */
-
-    const professorTemporario = {
-        nome: "Professor",
-        sobrenome: "Exemplo"
-    };
-
-    const nomeCompleto =
-        professorTemporario.nome +
-        " " +
-        professorTemporario.sobrenome;
-
-    nomeProfessor.textContent = nomeCompleto;
-
-    avatarUsuario.textContent =
-        criarIniciais(
-            professorTemporario.nome,
-            professorTemporario.sobrenome
-        );
-}
-
-
-// ========================================
-// CRIAÇÃO DAS INICIAIS DO AVATAR
-// ========================================
-
-function criarIniciais(nome, sobrenome) {
-
-    const primeiraInicial =
-        nome.charAt(0).toUpperCase();
-
-    const segundaInicial =
-        sobrenome.charAt(0).toUpperCase();
-
-    return primeiraInicial + segundaInicial;
-}
-
-
-// ========================================
-// EVENTOS DO MENU
-// ========================================
-
 function adicionarEventosDoMenu() {
+    menuTurmas.addEventListener("click", function () {
+        marcarMenuAtivo(menuTurmas);
+        renderizarTurmas();
+    });
 
-    menuTurmas.addEventListener(
-        "click",
-        function () {
+    menuPerfil.addEventListener("click", function () {
+        marcarMenuAtivo(menuPerfil);
+        renderizarPerfil();
+    });
 
-            marcarMenuAtivo(menuTurmas);
-
-            renderizarTurmas();
-        }
-    );
-
-
-    menuPerfil.addEventListener(
-        "click",
-        function () {
-
-            marcarMenuAtivo(menuPerfil);
-
-            exibirPerfilTemporario();
-        }
-    );
-
-
-    botaoSair.addEventListener(
-        "click",
-        function () {
-
-            sairDoSistema();
-        }
-    );
+    botaoSair.addEventListener("click", sairDoSistema);
 }
-
-
-// ========================================
-// ITEM ATIVO DO MENU
-// ========================================
 
 function marcarMenuAtivo(itemSelecionado) {
-
-    const itensMenu =
-        document.querySelectorAll(".item-menu");
+    const itensMenu = document.querySelectorAll(".item-menu");
 
     itensMenu.forEach(function (item) {
         item.classList.remove("ativo");
@@ -150,295 +40,96 @@ function marcarMenuAtivo(itemSelecionado) {
     itemSelecionado.classList.add("ativo");
 }
 
+function obterTurmasDoProfessor() {
+    const professor = SGAStorage.obterLogado();
 
-// ========================================
-// EXIBIÇÃO DAS TURMAS
-// ========================================
+    if (!professor) {
+        return [];
+    }
+
+    return turmas.filter(function (turma) {
+        return turma.professorId === professor.id;
+    });
+}
 
 function renderizarTurmas() {
+    const turmasDoProfessor = obterTurmasDoProfessor();
 
-    conteudoPrincipal.innerHTML = "";
+    conteudoPrincipal.innerHTML = `
+        <section class="cabecalho-conteudo">
+            <p class="texto-boas-vindas">Bem-vindo ao Sistema de Gestão Acadêmica</p>
+            <h2>Minhas turmas</h2>
+            <p>Selecione uma turma para visualizar os alunos e gerenciar as notas.</p>
+        </section>
 
+        <section class="lista-turmas" id="lista-turmas"></section>
+    `;
 
-    const cabecalhoConteudo =
-        document.createElement("section");
+    const listaTurmas = document.getElementById("lista-turmas");
 
-    cabecalhoConteudo.classList.add(
-        "cabecalho-conteudo"
-    );
-
-
-    const textoBoasVindas =
-        document.createElement("p");
-
-    textoBoasVindas.classList.add(
-        "texto-boas-vindas"
-    );
-
-    textoBoasVindas.textContent =
-        "Bem-vindo ao Sistema de Gestão Acadêmica";
-
-
-    const titulo =
-        document.createElement("h2");
-
-    titulo.textContent = "Minhas turmas";
-
-
-    const descricao =
-        document.createElement("p");
-
-    descricao.textContent =
-        "Selecione uma turma para visualizar os alunos e gerenciar as notas.";
-
-
-    cabecalhoConteudo.appendChild(
-        textoBoasVindas
-    );
-
-    cabecalhoConteudo.appendChild(titulo);
-
-    cabecalhoConteudo.appendChild(descricao);
-
-
-    const listaTurmas =
-        document.createElement("section");
-
-    listaTurmas.classList.add("lista-turmas");
-
-    listaTurmas.id = "lista-turmas";
-
-
-    conteudoPrincipal.appendChild(
-        cabecalhoConteudo
-    );
-
-    conteudoPrincipal.appendChild(
-        listaTurmas
-    );
-
-
-    if (turmas.length === 0) {
-
-        exibirMensagemSemTurmas(listaTurmas);
-
+    if (turmasDoProfessor.length === 0) {
+        listaTurmas.innerHTML = `
+            <p class="mensagem-sem-turmas">
+                Nenhuma turma foi encontrada para este professor.
+            </p>
+        `;
         return;
     }
 
-
-    turmas.forEach(
-        function (turma) {
-
-            const cartao =
-                criarCartaoTurma(turma);
-
-            listaTurmas.appendChild(cartao);
-        }
-    );
+    turmasDoProfessor.forEach(function (turma) {
+        listaTurmas.appendChild(criarCartaoTurma(turma));
+    });
 }
 
-
-// ========================================
-// CRIAÇÃO DE UM CARTÃO
-// ========================================
-
 function criarCartaoTurma(turma) {
+    const cartao = document.createElement("article");
+    cartao.className = "cartao-turma";
+    cartao.tabIndex = 0;
+    cartao.setAttribute("role", "button");
 
-    const cartao =
-        document.createElement("article");
+    cartao.innerHTML = `
+        <h3>${turma.disciplina}</h3>
+        <p class="informacao-turma">Período: ${turma.periodo}</p>
+        <p class="informacao-turma">Alunos matriculados: ${turma.alunos.length}</p>
+        <button type="button" class="botao-acessar-turma">Acessar turma</button>
+    `;
 
-    cartao.classList.add("cartao-turma");
+    cartao.addEventListener("click", function () {
+        abrirTurma(turma.id);
+    });
 
-
-    const titulo =
-        document.createElement("h3");
-
-    titulo.textContent = turma.disciplina;
-
-
-    const periodo =
-        document.createElement("p");
-
-    periodo.classList.add(
-        "informacao-turma"
-    );
-
-    periodo.textContent =
-        "Período: " + turma.periodo;
-
-
-    const quantidadeAlunos =
-        document.createElement("p");
-
-    quantidadeAlunos.classList.add(
-        "informacao-turma"
-    );
-
-    quantidadeAlunos.textContent =
-        "Alunos matriculados: " +
-        turma.alunos.length;
-
-
-    const botaoAcessar =
-        document.createElement("button");
-
-    botaoAcessar.type = "button";
-
-    botaoAcessar.classList.add(
-        "botao-acessar-turma"
-    );
-
-    botaoAcessar.textContent =
-        "Acessar turma";
-
-
-    botaoAcessar.addEventListener(
-        "click",
-        function () {
-
+    cartao.addEventListener("keydown", function (evento) {
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
             abrirTurma(turma.id);
         }
-    );
-
-
-    cartao.appendChild(titulo);
-
-    cartao.appendChild(periodo);
-
-    cartao.appendChild(quantidadeAlunos);
-
-    cartao.appendChild(botaoAcessar);
-
+    });
 
     return cartao;
 }
 
-
-// ========================================
-// ABERTURA DE UMA TURMA
-// ========================================
-
 function abrirTurma(turmaId) {
-    localStorage.setItem(
-        "turmaSelecionadaId",
-        turmaId
-    );
+    const turmaSelecionada = obterTurmasDoProfessor().find(function (turma) {
+        return turma.id === turmaId;
+    });
 
-    renderizarTabelaNotas(turmaId);
+    if (!turmaSelecionada) {
+        alert("Turma não encontrada.");
+        return;
+    }
+
+    localStorage.setItem("turmaSelecionadaId", turmaSelecionada.id);
+    SGANotas.renderizarTabelaNotas(turmaSelecionada.id);
 }
-
-
-// ========================================
-// MENSAGEM SEM TURMAS
-// ========================================
-
-function exibirMensagemSemTurmas(
-    elementoLista
-) {
-
-    const mensagem =
-        document.createElement("p");
-
-    mensagem.classList.add(
-        "mensagem-sem-turmas"
-    );
-
-    mensagem.textContent =
-        "Nenhuma turma foi encontrada para este professor.";
-
-    elementoLista.appendChild(mensagem);
-}
-
-
-// ========================================
-// PERFIL TEMPORÁRIO
-// ========================================
-
-function exibirPerfilTemporario() {
-
-    conteudoPrincipal.innerHTML = "";
-
-
-    const secaoPerfil =
-        document.createElement("section");
-
-    secaoPerfil.classList.add(
-        "cabecalho-conteudo"
-    );
-
-
-    const textoPerfil =
-        document.createElement("p");
-
-    textoPerfil.classList.add(
-        "texto-boas-vindas"
-    );
-
-    textoPerfil.textContent =
-        "Dados do professor";
-
-
-    const tituloPerfil =
-        document.createElement("h2");
-
-    tituloPerfil.textContent =
-        "Meu perfil";
-
-
-    const mensagemPerfil =
-        document.createElement("p");
-
-    mensagemPerfil.classList.add(
-        "mensagem-carregamento"
-    );
-
-    mensagemPerfil.textContent =
-        "O perfil será exibido nesta área após a integração com perfil.js.";
-
-
-    secaoPerfil.appendChild(textoPerfil);
-
-    secaoPerfil.appendChild(tituloPerfil);
-
-
-    conteudoPrincipal.appendChild(
-        secaoPerfil
-    );
-
-    conteudoPrincipal.appendChild(
-        mensagemPerfil
-    );
-}
-
-
-// ========================================
-// SAÍDA DO SISTEMA
-// ========================================
 
 function sairDoSistema() {
+    const desejaSair = confirm("Deseja realmente sair do sistema?");
 
-    const desejaSair =
-        confirm(
-            "Deseja realmente sair do sistema?"
-        );
-
-
-    if (desejaSair) {
-
-        /*
-            A chave oficial do usuário logado
-            será definida pela Pessoa 1.
-        */
-
-        localStorage.removeItem(
-            "usuarioLogadoId"
-        );
-
-        localStorage.removeItem(
-            "turmaSelecionadaId"
-        );
-
-        window.location.href =
-            "index.html";
+    if (!desejaSair) {
+        return;
     }
+
+    SGAStorage.logout();
+    localStorage.removeItem("turmaSelecionadaId");
+    window.location.href = "index.html";
 }
