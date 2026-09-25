@@ -42,6 +42,23 @@ function renderizarPerfil() {
             <button type="submit">Salvar</button>
         </form>
     `;
+    
+
+        document.getElementById("form-perfil").addEventListener("submit", function (evento) {
+        evento.preventDefault();
+
+        const novoNome = document.getElementById("perfil-nome").value;
+        const novoEmail = document.getElementById("perfil-email").value;
+        const novaDisciplina = document.getElementById("perfil-disciplina").value;
+
+        SGAStorage.atualizarProfessor(professor.email, {
+            nome: novoNome,
+            email: novoEmail,
+            disciplinaPrincipal: novaDisciplina
+        });
+
+        atualizarCabecalho();
+    });
 }
 
 atualizarCabecalho();
