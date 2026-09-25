@@ -15,4 +15,34 @@ function atualizarCabecalho() {
     document.getElementById("avatar-usuario").textContent = iniciaisDoNome(professor.nome);
 }
 
+function renderizarPerfil() {
+    const professor = SGAStorage.obterLogado();
+    if (!professor) {
+        return;
+    }
+
+    const conteudo = document.getElementById("conteudo-principal");
+
+    conteudo.innerHTML = `
+        <section class="cabecalho-conteudo">
+            <p class="texto-boas-vindas">Dados do professor</p>
+            <h2>Meu perfil</h2>
+        </section>
+
+        <form id="form-perfil">
+            <label for="perfil-nome">Nome completo</label>
+            <input type="text" id="perfil-nome" value="${professor.nome}">
+
+            <label for="perfil-email">E-mail institucional</label>
+            <input type="email" id="perfil-email" value="${professor.email}">
+
+            <label for="perfil-disciplina">Disciplina principal</label>
+            <input type="text" id="perfil-disciplina" value="${professor.disciplinaPrincipal}">
+
+            <button type="submit">Salvar</button>
+        </form>
+    `;
+}
+
 atualizarCabecalho();
+renderizarPerfil();
