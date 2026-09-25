@@ -1,0 +1,122 @@
+function iniciaisDoNome(nome) {
+    const palavras = nome.split(" ");
+    const primeira = palavras[0][0];
+    const ultima = palavras[palavras.length - 1][0];
+    return (primeira + ultima).toUpperCase();
+}
+
+function atualizarCabecalho() {
+    const professor = SGAStorage.obterLogado();
+    if (!professor) {
+        return;
+    }
+
+    document.getElementById("nome-professor").textContent = professor.nome;
+
+    const avatar = document.getElementById("avatar-usuario");
+    const foto = SGAStorage.obterFoto(professor.email);
+
+    if (foto) {
+        avatar.style.backgroundImage = "url(" + foto + ")";
+        avatar.style.backgroundSize = "cover";
+        avatar.textContent = "";
+    } else {
+        avatar.style.backgroundImage = "";
+        avatar.textContent = iniciaisDoNome(professor.nome);
+    }
+}
+
+function renderizarPerfil() {
+    const professor = SGAStorage.obterLogado();
+    if (!professor) {
+        return;
+    }
+
+    const conteudo = document.getElementById("conteudo-principal");
+
+    conteudo.innerHTML = `
+        <section class="cabecalho-conteudo">
+            <p class="texto-boas-vindas">Dados do professor</p>
+            <h2>Meu perfil</h2>
+        </section>
+
+        <form id="form-perfil">
+            <label for="perfil-nome">Nome completo</label>
+            <input type="text" id="perfil-nome" value="${professor.nome}">
+
+            <label for="perfil-email">E-mail institucional</label>
+            <input type="email" id="perfil-email" value="${professor.email}">
+
+            <label for="perfil-disciplina">Disciplina principal</label>
+            <input type="text" id="perfil-disciplina" value="${professor.disciplinaPrincipal}">
+
+            <label for="perfil-foto">Foto do perfil (PNG ou JPG)</label>
+            <input type="file" id="perfil-foto" accept="image/png, image/jpeg">
+
+            <button type="submit">Salvar</button>
+        </form>
+    `;
+
+    document.getElementById("form-perfil").addEventListener("submit", function (evento) {
+        evento.preventDefault();
+
+        const novoNome = document.getElementById("perfil-nome").value;
+        const novoEmail = document.getElementById("perfil-email").value;
+        const novaDisciplina = document.getElementById("perfil-disciplina").value;
+
+        if (novoNome.trim() === "" || novaDisciplina.trim() === "") {
+            alert("Preencha nome e disciplina.");
+            return;
+        }
+
+        SGAStorage.atualizarProfessor(professor.email, {
+            nome: novoNome,
+            email: novoEmail,
+            disciplinaPrincipal: novaDisciplina
+        });
+
+        if (novoEmail.toLowerCase() !== professor.email.toLowerCase()) {
+            SGAStorage.definirLogado(novoEmail);
+        }
+
+        atualizarCabecalho();
+    });
+
+           document.getElementById("perfil-foto").addEventListener("change", function (evento) {
+        const arquivo = evento.target.files[0];
+
+        if (!arquivo) {
+            return;
+        }
+
+        const tiposPermitidos = ["image/png", "image/jpeg"];
+        if (!tiposPermitidos.includes(arquivo.type)) {
+            alert("Envie apenas imagens PNG ou JPG.");
+            return;
+        }
+
+        const tamanhoMaximo = 2 * 1024 * 1024;
+        if (arquivo.size > tamanhoMaximo) {
+            alert("A imagem deve ter no máximo 2 MB.");
+            return;
+        }
+
+        const leitor = new FileReader();
+
+        leitor.onload = function () {
+            const sucesso = SGAStorage.salvarFoto(professor.email, leitor.result);
+
+            if (!sucesso) {
+                alert("Não foi possível salvar a foto. Tente uma imagem menor.");
+                return;
+            }
+
+            atualizarCabecalho();
+        };
+
+        leitor.readAsDataURL(arquivo);
+    });
+}
+
+atualizarCabecalho();
+renderizarPerfil();
