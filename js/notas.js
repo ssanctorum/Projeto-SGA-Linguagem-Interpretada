@@ -33,7 +33,8 @@ let paginaAtual = 1;
 let turmaAtual = null;
 
 function renderizarTabela(idTurma, containerId = "conteudo-principal") {
-  turmaAtual = turmas.find(t => t.id === idTurma);
+  const turma = turmas.find(t => t.id === idTurma);
+  turmaAtual = { ...turma, alunos: SGAStorage.obterAlunosDaTurma(turma) };
   paginaAtual = 1;
   desenharTabela(containerId);
 }
@@ -119,6 +120,14 @@ function aoEditarNota(evento) {
   }
 
   if (!precisaDeFinal(aluno)) aluno.notaFinal = null;
+
+  SGAStorage.salvarNotasAluno(turmaAtual.id, aluno.matricula, {
+    prova1: aluno.prova1,
+    prova2: aluno.prova2,
+    projeto1: aluno.projeto1,
+    projeto2: aluno.projeto2,
+    notaFinal: aluno.notaFinal
+  });
 
   atualizarLinha(input.closest("tr"), aluno);
 }
