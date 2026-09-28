@@ -10,6 +10,10 @@ function calcularMedia(aluno) {
   return calcularNotaIndividual(aluno) * 0.4 + calcularNotaProjeto(aluno) * 0.6;
 }
 
+function precisaDeFinal(aluno) {
+  return calcularMedia(aluno) < 7 && calcularNotaProjeto(aluno) >= 4;
+}
+
 function definirStatus(aluno) {
   const media = calcularMedia(aluno);
   const projeto = calcularNotaProjeto(aluno);
@@ -34,21 +38,27 @@ function renderizarTabela(idTurma, containerId = "conteudo-principal") {
   desenharTabela(containerId);
 }
 
-function criarLinhaAluno(aluno) {
-  const media = calcularMedia(aluno);
-  const status = definirStatus(aluno);
+function criarCampoNota(aluno, campo) {
+  return `<input type="number" min="0" max="10" step="0.1" value="${aluno[campo]}" data-matricula="${aluno.matricula}" data-campo="${campo}">`;
+}
 
+function criarCelulaFinal(aluno) {
+  if (!precisaDeFinal(aluno)) return "-";
+  return `<input type="number" min="0" max="10" step="0.1" value="${aluno.notaFinal ?? ""}" data-matricula="${aluno.matricula}" data-campo="notaFinal">`;
+}
+
+function criarLinhaAluno(aluno) {
   return `
     <tr>
       <td>${aluno.matricula}</td>
       <td>${aluno.nome}</td>
-      <td>${aluno.prova1}</td>
-      <td>${aluno.prova2}</td>
-      <td>${aluno.projeto1}</td>
-      <td>${aluno.projeto2}</td>
-      <td>${media.toFixed(1)}</td>
-      <td>${status}</td>
-      <td>${aluno.notaFinal ?? "-"}</td>
+      <td>${criarCampoNota(aluno, "prova1")}</td>
+      <td>${criarCampoNota(aluno, "prova2")}</td>
+      <td>${criarCampoNota(aluno, "projeto1")}</td>
+      <td>${criarCampoNota(aluno, "projeto2")}</td>
+      <td class="celula-media">${calcularMedia(aluno).toFixed(1)}</td>
+      <td class="celula-status">${definirStatus(aluno)}</td>
+      <td class="celula-final">${criarCelulaFinal(aluno)}</td>
     </tr>
   `;
 }
@@ -83,6 +93,36 @@ function criarControlesPaginacao(totalPaginas) {
   `;
 }
 
+function atualizarLinha(linha, aluno) {
+  linha.querySelector(".celula-media").textContent = calcularMedia(aluno).toFixed(1);
+  linha.querySelector(".celula-status").textContent = definirStatus(aluno);
+  linha.querySelector(".celula-final").innerHTML = criarCelulaFinal(aluno);
+
+  const campoFinal = linha.querySelector('input[data-campo="notaFinal"]');
+  if (campoFinal) campoFinal.addEventListener("change", aoEditarNota);
+}
+
+function aoEditarNota(evento) {
+  const input = evento.target;
+  const aluno = turmaAtual.alunos.find(a => a.matricula === input.dataset.matricula);
+  const campo = input.dataset.campo;
+  const valor = input.value.trim();
+
+  if (campo === "notaFinal" && valor === "") {
+    aluno.notaFinal = null;
+  } else if (notaValida(valor)) {
+    aluno[campo] = Number(valor);
+  } else {
+    alert("Digite uma nota entre 0 e 10.");
+    input.value = aluno[campo] ?? "";
+    return;
+  }
+
+  if (!precisaDeFinal(aluno)) aluno.notaFinal = null;
+
+  atualizarLinha(input.closest("tr"), aluno);
+}
+
 function desenharTabela(containerId) {
   const container = document.getElementById(containerId);
   const totalPaginas = Math.ceil(turmaAtual.alunos.length / ALUNOS_POR_PAGINA);
@@ -102,7 +142,18 @@ function desenharTabela(containerId) {
     ${criarControlesPaginacao(totalPaginas)}
   `;
 
-   document.getElementById("pag-proximo").addEventListener("click", () => {
+  container.querySelectorAll("input[data-campo]").forEach(input => {
+    input.addEventListener("change", aoEditarNota);
+  });
+
+  document.getElementById("pag-anterior").addEventListener("click", () => {
+    if (paginaAtual > 1) {
+      paginaAtual--;
+      desenharTabela(containerId);
+    }
+  });
+
+  document.getElementById("pag-proximo").addEventListener("click", () => {
     if (paginaAtual < totalPaginas) {
       paginaAtual++;
       desenharTabela(containerId);
