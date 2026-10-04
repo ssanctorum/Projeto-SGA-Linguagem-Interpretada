@@ -1,42 +1,4 @@
 // ========================================
-// DADOS TEMPORÁRIOS PARA TESTE
-// ========================================
-
-/*
-    Estes dados estão temporariamente neste arquivo
-    para que a Home possa ser testada enquanto o
-    dados.js ainda está vazio.
-
-    Depois, substituiremos esta lista pelos dados
-    oficiais definidos pelo grupo.
-*/
-
-const turmasTemporarias = [
-    {
-        id: 1,
-        disciplina: "Linguagem de Programação",
-        periodo: "2026.2",
-        codigo: "LP001",
-        quantidadeAlunos: 30
-    },
-    {
-        id: 2,
-        disciplina: "Banco de Dados",
-        periodo: "2026.2",
-        codigo: "BD001",
-        quantidadeAlunos: 25
-    },
-    {
-        id: 3,
-        disciplina: "Engenharia de Software",
-        periodo: "2026.2",
-        codigo: "ES001",
-        quantidadeAlunos: 28
-    }
-];
-
-
-// ========================================
 // ELEMENTOS DA PÁGINA
 // ========================================
 
@@ -68,43 +30,12 @@ const botaoSair =
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    exibirProfessorTemporario();
+    atualizarCabecalho();
 
     adicionarEventosDoMenu();
 
     renderizarTurmas();
 });
-
-
-// ========================================
-// PROFESSOR TEMPORÁRIO
-// ========================================
-
-function exibirProfessorTemporario() {
-
-    /*
-        Este nome será substituído posteriormente
-        pelo professor salvo durante o login.
-    */
-
-    const professorTemporario = {
-        nome: "Professor",
-        sobrenome: "Exemplo"
-    };
-
-    const nomeCompleto =
-        professorTemporario.nome +
-        " " +
-        professorTemporario.sobrenome;
-
-    nomeProfessor.textContent = nomeCompleto;
-
-    avatarUsuario.textContent =
-        criarIniciais(
-            professorTemporario.nome,
-            professorTemporario.sobrenome
-        );
-}
 
 
 // ========================================
@@ -157,7 +88,7 @@ function adicionarEventosDoMenu() {
 
             marcarMenuAtivo(menuPerfil);
 
-            exibirPerfilTemporario();
+            renderizarPerfil();
         }
     );
 
@@ -256,7 +187,15 @@ function renderizarTurmas() {
     );
 
 
-    if (turmasTemporarias.length === 0) {
+const professor = SGAStorage.obterLogado();
+
+    const turmasDoProfessor = turmas.filter(
+        function (turma) {
+            return turma.professorId === professor.id;
+        }
+    );
+
+    if (turmasDoProfessor.length === 0) {
 
         exibirMensagemSemTurmas(listaTurmas);
 
@@ -264,7 +203,7 @@ function renderizarTurmas() {
     }
 
 
-    turmasTemporarias.forEach(
+    turmasDoProfessor.forEach(
         function (turma) {
 
             const cartao =
@@ -325,7 +264,7 @@ function criarCartaoTurma(turma) {
 
     quantidadeAlunos.textContent =
         "Alunos matriculados: " +
-        turma.quantidadeAlunos;
+        turma.alunos.length;
 
 
     const botaoAcessar =
@@ -371,131 +310,9 @@ function criarCartaoTurma(turma) {
 
 function abrirTurma(turmaId) {
 
-    const turmaSelecionada =
-        turmasTemporarias.find(
-            function (turma) {
+    marcarMenuAtivo(menuTurmas);
 
-                return turma.id === turmaId;
-            }
-        );
-
-
-    if (!turmaSelecionada) {
-
-        alert("Turma não encontrada.");
-
-        return;
-    }
-
-
-    /*
-        Guarda temporariamente qual turma
-        foi escolhida.
-
-        A Pessoa 3 poderá usar essa informação
-        para carregar a tabela de notas.
-    */
-
-    localStorage.setItem(
-        "turmaSelecionadaId",
-        turmaSelecionada.id
-    );
-
-
-    conteudoPrincipal.innerHTML = "";
-
-
-    const secaoTurma =
-        document.createElement("section");
-
-    secaoTurma.classList.add(
-        "cabecalho-conteudo"
-    );
-
-
-    const textoTurma =
-        document.createElement("p");
-
-    textoTurma.classList.add(
-        "texto-boas-vindas"
-    );
-
-    textoTurma.textContent =
-        "Turma selecionada";
-
-
-    const tituloTurma =
-        document.createElement("h2");
-
-    tituloTurma.textContent =
-        turmaSelecionada.disciplina;
-
-
-    const informacoesTurma =
-        document.createElement("p");
-
-    informacoesTurma.textContent =
-        "Período: " +
-        turmaSelecionada.periodo +
-        " | Código: " +
-        turmaSelecionada.codigo;
-
-
-    const mensagemIntegracao =
-        document.createElement("p");
-
-    mensagemIntegracao.classList.add(
-        "mensagem-carregamento"
-    );
-
-    mensagemIntegracao.textContent =
-        "A tabela de notas será exibida nesta área após a integração com notas.js.";
-
-
-    const botaoVoltar =
-        document.createElement("button");
-
-    botaoVoltar.type = "button";
-
-    botaoVoltar.classList.add(
-        "botao-acessar-turma"
-    );
-
-    botaoVoltar.textContent =
-        "Voltar para minhas turmas";
-
-
-    botaoVoltar.addEventListener(
-        "click",
-        function () {
-
-            marcarMenuAtivo(menuTurmas);
-
-            renderizarTurmas();
-        }
-    );
-
-
-    secaoTurma.appendChild(textoTurma);
-
-    secaoTurma.appendChild(tituloTurma);
-
-    secaoTurma.appendChild(
-        informacoesTurma
-    );
-
-
-    conteudoPrincipal.appendChild(
-        secaoTurma
-    );
-
-    conteudoPrincipal.appendChild(
-        mensagemIntegracao
-    );
-
-    conteudoPrincipal.appendChild(
-        botaoVoltar
-    );
+    renderizarTabela(turmaId);
 }
 
 
@@ -522,67 +339,6 @@ function exibirMensagemSemTurmas(
 
 
 // ========================================
-// PERFIL TEMPORÁRIO
-// ========================================
-
-function exibirPerfilTemporario() {
-
-    conteudoPrincipal.innerHTML = "";
-
-
-    const secaoPerfil =
-        document.createElement("section");
-
-    secaoPerfil.classList.add(
-        "cabecalho-conteudo"
-    );
-
-
-    const textoPerfil =
-        document.createElement("p");
-
-    textoPerfil.classList.add(
-        "texto-boas-vindas"
-    );
-
-    textoPerfil.textContent =
-        "Dados do professor";
-
-
-    const tituloPerfil =
-        document.createElement("h2");
-
-    tituloPerfil.textContent =
-        "Meu perfil";
-
-
-    const mensagemPerfil =
-        document.createElement("p");
-
-    mensagemPerfil.classList.add(
-        "mensagem-carregamento"
-    );
-
-    mensagemPerfil.textContent =
-        "O perfil será exibido nesta área após a integração com perfil.js.";
-
-
-    secaoPerfil.appendChild(textoPerfil);
-
-    secaoPerfil.appendChild(tituloPerfil);
-
-
-    conteudoPrincipal.appendChild(
-        secaoPerfil
-    );
-
-    conteudoPrincipal.appendChild(
-        mensagemPerfil
-    );
-}
-
-
-// ========================================
 // SAÍDA DO SISTEMA
 // ========================================
 
@@ -601,9 +357,7 @@ function sairDoSistema() {
             será definida pela Pessoa 1.
         */
 
-        localStorage.removeItem(
-            "usuarioLogadoId"
-        );
+        SGAStorage.logout();
 
         localStorage.removeItem(
             "turmaSelecionadaId"
