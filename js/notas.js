@@ -168,4 +168,9 @@ function desenharTabela(containerId) {
       desenharTabela(containerId);
     }
   });
+
+    document.getElementById("voltar-turmas").addEventListener("click", () => {
+    renderizarTurmas();
+    marcarMenuAtivo(menuTurmas);
+  });
 }
