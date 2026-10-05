@@ -300,8 +300,6 @@ function criarCartaoTurma(turma) {
 
     cartao.appendChild(periodo);
 
-    cartao.appendChild(codigo);
-
     cartao.appendChild(quantidadeAlunos);
 
     cartao.appendChild(botaoAcessar);
