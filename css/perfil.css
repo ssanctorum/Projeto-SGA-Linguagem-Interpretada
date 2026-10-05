@@ -101,3 +101,8 @@
     font-weight: 500;
     cursor: pointer;
 }
+
+.botao-alterar-foto i,
+.botao-remover-foto i {
+    margin-right: 6px;
+}
