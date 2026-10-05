@@ -33,6 +33,7 @@ function renderizarPerfil() {
     }
 
     const conteudo = document.getElementById("conteudo-principal");
+    const foto = SGAStorage.obterFoto(professor.email);
 
     conteudo.innerHTML = `
         <section class="cabecalho-conteudo">
@@ -40,7 +41,24 @@ function renderizarPerfil() {
             <h2>Meu perfil</h2>
         </section>
 
-        <form id="form-perfil">
+        <section class="secao-perfil-foto">
+            <div class="avatar-perfil" id="avatar-perfil-preview"
+                 style="${foto ? `background-image: url(${foto})` : ""}">
+                ${foto ? "" : iniciaisDoNome(professor.nome)}
+            </div>
+
+            <div class="info-foto">
+                <p><strong>Foto do perfil</strong></p>
+                <p class="legenda-foto">PNG ou JPG, até 2 MB.</p>
+                <div class="acoes-foto">
+                    <label class="botao-alterar-foto" for="perfil-foto">Alterar foto</label>
+                    <button type="button" class="botao-remover-foto" id="perfil-remover-foto">Remover</button>
+                    <input type="file" id="perfil-foto" class="input-foto-oculto" accept="image/png, image/jpeg">
+                </div>
+            </div>
+        </section>
+
+        <form id="form-perfil" class="form-perfil-dados">
             <label for="perfil-nome">Nome completo</label>
             <input type="text" id="perfil-nome" value="${professor.nome}">
 
@@ -49,9 +67,6 @@ function renderizarPerfil() {
 
             <label for="perfil-disciplina">Disciplina principal</label>
             <input type="text" id="perfil-disciplina" value="${professor.disciplinaPrincipal}">
-
-            <label for="perfil-foto">Foto do perfil (PNG ou JPG)</label>
-            <input type="file" id="perfil-foto" accept="image/png, image/jpeg">
 
             <button type="submit">Salvar</button>
         </form>
@@ -82,7 +97,7 @@ function renderizarPerfil() {
         atualizarCabecalho();
     });
 
-           document.getElementById("perfil-foto").addEventListener("change", function (evento) {
+    document.getElementById("perfil-foto").addEventListener("change", function (evento) {
         const arquivo = evento.target.files[0];
 
         if (!arquivo) {
@@ -112,9 +127,16 @@ function renderizarPerfil() {
             }
 
             atualizarCabecalho();
+            renderizarPerfil();
         };
 
         leitor.readAsDataURL(arquivo);
+    });
+
+    document.getElementById("perfil-remover-foto").addEventListener("click", function () {
+        SGAStorage.removerFoto(professor.email);
+        atualizarCabecalho();
+        renderizarPerfil();
     });
 }
 
