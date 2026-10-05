@@ -126,6 +126,11 @@ body.pagina-home {
         color 0.3s;
 }
 
+.item-menu i,
+.botao-sair i {
+    margin-right: 8px;
+}
+
 .botao-sair:hover {
     background-color: var(--branco);
     color: var(--azul-marinho);

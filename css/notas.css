@@ -1,0 +1,101 @@
+.celula-media,
+.celula-status,
+.celula-final {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--branco);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 16px;
+}
+
+thead {
+    background-color: var(--azul-marinho);
+}
+
+thead th {
+    color: var(--branco);
+    text-align: left;
+    padding: 12px 10px;
+    font-weight: 500;
+}
+
+thead th:nth-child(7),
+thead th:nth-child(8),
+thead th:nth-child(9) {
+    text-align: center;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid var(--azul-claro);
+    color: var(--cinza-escuro);
+}
+
+tbody tr:hover {
+    background-color: var(--cinza-claro);
+}
+
+table input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid var(--azul-claro);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-aprovado {
+    background-color: var(--verde);
+}
+
+.status-reprovado {
+    background-color: var(--vermelho);
+}
+
+.status-final {
+    background-color: var(--ambar);
+}
+
+.paginacao {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.paginacao button {
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+}
+
+.paginacao button:disabled {
+    background-color: var(--cinza-medio);
+    cursor: not-allowed;
+}
+
+#voltar-turmas {
+    background-color: transparent;
+    border: 1px solid var(--azul-principal);
+    color: var(--azul-principal);
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    margin-bottom: 16px;
+}

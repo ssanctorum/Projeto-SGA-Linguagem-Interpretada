@@ -51,8 +51,8 @@ function renderizarPerfil() {
                 <p><strong>Foto do perfil</strong></p>
                 <p class="legenda-foto">PNG ou JPG, até 2 MB.</p>
                 <div class="acoes-foto">
-                    <label class="botao-alterar-foto" for="perfil-foto">Alterar foto</label>
-                    <button type="button" class="botao-remover-foto" id="perfil-remover-foto">Remover</button>
+                                        <label class="botao-alterar-foto" for="perfil-foto"><i class="bi bi-camera"></i> Alterar foto</label>
+                    <button type="button" class="botao-remover-foto" id="perfil-remover-foto"><i class="bi bi-trash"></i> Remover</button>
                     <input type="file" id="perfil-foto" class="input-foto-oculto" accept="image/png, image/jpeg">
                 </div>
             </div>
