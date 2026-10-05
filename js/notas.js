@@ -48,6 +48,12 @@ function criarCelulaFinal(aluno) {
   return `<input type="number" min="0" max="10" step="0.1" value="${aluno.notaFinal ?? ""}" data-matricula="${aluno.matricula}" data-campo="notaFinal">`;
 }
 
+function classeStatus(status) {
+  if (status === "Aprovado") return "status-aprovado";
+  if (status === "Reprovado") return "status-reprovado";
+  return "status-final";
+}
+
 function criarLinhaAluno(aluno) {
   return `
     <tr>
@@ -58,7 +64,7 @@ function criarLinhaAluno(aluno) {
       <td>${criarCampoNota(aluno, "projeto1")}</td>
       <td>${criarCampoNota(aluno, "projeto2")}</td>
       <td class="celula-media">${calcularMedia(aluno).toFixed(1)}</td>
-      <td class="celula-status">${definirStatus(aluno)}</td>
+      <td class="celula-status ${classeStatus(definirStatus(aluno))}">${definirStatus(aluno)}</td>
       <td class="celula-final">${criarCelulaFinal(aluno)}</td>
     </tr>
   `;
@@ -96,7 +102,12 @@ function criarControlesPaginacao(totalPaginas) {
 
 function atualizarLinha(linha, aluno) {
   linha.querySelector(".celula-media").textContent = calcularMedia(aluno).toFixed(1);
-  linha.querySelector(".celula-status").textContent = definirStatus(aluno);
+
+  const status = definirStatus(aluno);
+  const celulaStatus = linha.querySelector(".celula-status");
+  celulaStatus.textContent = status;
+  celulaStatus.className = `celula-status ${classeStatus(status)}`;
+
   linha.querySelector(".celula-final").innerHTML = criarCelulaFinal(aluno);
 
   const campoFinal = linha.querySelector('input[data-campo="notaFinal"]');
@@ -170,6 +181,6 @@ function desenharTabela(containerId) {
   });
 
   document.getElementById("voltar-turmas").addEventListener("click", () => {
-  renderizarTurmas();
-});
+    renderizarTurmas();
+  });
 }

@@ -1,0 +1,84 @@
+.celula-media,
+.celula-status {
+  font-weight: 600;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff;
+}
+
+thead {
+  background-color: #112D60;
+  color: #fff;
+}
+
+th,
+td {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #DFECFA;
+}
+
+tbody tr:hover {
+  background-color: #DFECFA;
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #186FD9;
+}
+
+.paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.paginacao button {
+  background-color: #186FD9;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.paginacao button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+#voltar-turmas {
+  background: none;
+  border: none;
+  color: #186FD9;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+td.status-aprovado {
+  color: #279E5B;
+}
+
+td.status-reprovado {
+  color: #E63946;
+}
+
+td.status-final {
+  color: #F0A019;
+}
