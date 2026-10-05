@@ -30,6 +30,13 @@ const botaoSair =
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    const professorLogado = SGAStorage.obterLogado();
+
+    if (!professorLogado) {
+        window.location.href = "index.html";
+        return;
+    }
+
     atualizarCabecalho();
 
     adicionarEventosDoMenu();
