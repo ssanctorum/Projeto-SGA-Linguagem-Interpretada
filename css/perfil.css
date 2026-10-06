@@ -1,0 +1,108 @@
+.secao-perfil-foto {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background-color: var(--branco);
+    border: 1px solid var(--azul-claro);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.avatar-perfil {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.info-foto p {
+    margin: 0 0 4px 0;
+}
+
+.info-foto .legenda-foto {
+    color: var(--cinza-medio);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.acoes-foto {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.botao-alterar-foto {
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.botao-remover-foto {
+    background-color: transparent;
+    color: var(--cinza-escuro);
+    border: 1px solid var(--cinza-medio);
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.input-foto-oculto {
+    display: none;
+}
+
+.form-perfil-dados {
+    background-color: var(--branco);
+    border: 1px solid var(--azul-claro);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 480px;
+}
+
+.form-perfil-dados label {
+    display: block;
+    color: var(--cinza-escuro);
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.form-perfil-dados input[type="text"],
+.form-perfil-dados input[type="email"] {
+    width: 100%;
+    background-color: var(--azul-claro);
+    border: 1px solid var(--azul-claro);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    font-size: 15px;
+    color: var(--cinza-escuro);
+    box-sizing: border-box;
+}
+
+.form-perfil-dados button[type="submit"] {
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.botao-alterar-foto i,
+.botao-remover-foto i {
+    margin-right: 6px;
+}

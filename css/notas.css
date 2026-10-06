@@ -1,84 +1,101 @@
 .celula-media,
-.celula-status {
-  font-weight: 600;
-  text-align: center;
+.celula-status,
+.celula-final {
+    text-align: center;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--branco);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 16px;
 }
 
 thead {
-  background-color: #112D60;
-  color: #fff;
+    background-color: var(--azul-marinho);
 }
 
-th,
-td {
-  padding: 0.6rem 0.8rem;
-  text-align: left;
-  border-bottom: 1px solid #DFECFA;
+thead th {
+    color: var(--branco);
+    text-align: left;
+    padding: 12px 10px;
+    font-weight: 500;
+}
+
+thead th:nth-child(7),
+thead th:nth-child(8),
+thead th:nth-child(9) {
+    text-align: center;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid var(--azul-claro);
+    color: var(--cinza-escuro);
 }
 
 tbody tr:hover {
-  background-color: #DFECFA;
+    background-color: var(--cinza-claro);
 }
 
-input[type="number"] {
-  width: 60px;
-  padding: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  text-align: center;
+table input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid var(--azul-claro);
+    border-radius: 4px;
+    text-align: center;
 }
 
-input[type="number"]:focus {
-  outline: none;
-  border-color: #186FD9;
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-aprovado {
+    background-color: var(--verde);
+}
+
+.status-reprovado {
+    background-color: var(--vermelho);
+}
+
+.status-final {
+    background-color: var(--ambar);
 }
 
 .paginacao {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
 }
 
 .paginacao button {
-  background-color: #186FD9;
-  color: #fff;
-  border: none;
-  padding: 0.4rem 0.9rem;
-  border-radius: 4px;
-  cursor: pointer;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
 }
 
 .paginacao button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+    background-color: var(--cinza-medio);
+    cursor: not-allowed;
 }
 
 #voltar-turmas {
-  background: none;
-  border: none;
-  color: #186FD9;
-  cursor: pointer;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-}
-
-td.status-aprovado {
-  color: #279E5B;
-}
-
-td.status-reprovado {
-  color: #E63946;
-}
-
-td.status-final {
-  color: #F0A019;
+    background-color: transparent;
+    border: 1px solid var(--azul-principal);
+    color: var(--azul-principal);
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    margin-bottom: 16px;
 }

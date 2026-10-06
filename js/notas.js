@@ -24,6 +24,16 @@ function definirStatus(aluno) {
   return projeto + aluno.notaFinal >= 7 ? "Aprovado" : "Reprovado";
 }
 
+function criarBadgeStatus(aluno) {
+  const status = definirStatus(aluno);
+  const classes = {
+    "Aprovado": "status-aprovado",
+    "Reprovado": "status-reprovado",
+    "Fará prova final": "status-final"
+  };
+  return `<span class="status-badge ${classes[status]}">${status}</span>`;
+}
+
 function notaValida(valor) {
   return valor !== "" && !isNaN(valor) && valor >= 0 && valor <= 10;
 }
@@ -64,7 +74,7 @@ function criarLinhaAluno(aluno) {
       <td>${criarCampoNota(aluno, "projeto1")}</td>
       <td>${criarCampoNota(aluno, "projeto2")}</td>
       <td class="celula-media">${calcularMedia(aluno).toFixed(1)}</td>
-      <td class="celula-status ${classeStatus(definirStatus(aluno))}">${definirStatus(aluno)}</td>
+      <td class="celula-status">${criarBadgeStatus(aluno)}</td>
       <td class="celula-final">${criarCelulaFinal(aluno)}</td>
     </tr>
   `;
@@ -102,12 +112,7 @@ function criarControlesPaginacao(totalPaginas) {
 
 function atualizarLinha(linha, aluno) {
   linha.querySelector(".celula-media").textContent = calcularMedia(aluno).toFixed(1);
-
-  const status = definirStatus(aluno);
-  const celulaStatus = linha.querySelector(".celula-status");
-  celulaStatus.textContent = status;
-  celulaStatus.className = `celula-status ${classeStatus(status)}`;
-
+  linha.querySelector(".celula-status").innerHTML = criarBadgeStatus(aluno);
   linha.querySelector(".celula-final").innerHTML = criarCelulaFinal(aluno);
 
   const campoFinal = linha.querySelector('input[data-campo="notaFinal"]');
@@ -180,7 +185,8 @@ function desenharTabela(containerId) {
     }
   });
 
-  document.getElementById("voltar-turmas").addEventListener("click", () => {
+    document.getElementById("voltar-turmas").addEventListener("click", () => {
     renderizarTurmas();
+    marcarMenuAtivo(menuTurmas);
   });
 }
